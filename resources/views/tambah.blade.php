@@ -9,19 +9,27 @@
 </head>
 
 <body>
+    <h1>{{$title ?? ''}}</h1>
     <a href="{{ url()->previous() }}">Kembali</a>
     <form action="{{ route('tambah-action') }}" method="POST">
         @csrf
+        <input type="hidden" name="" value="">
         <label for="">Angka 1</label>
-        <input type="number" name="angka1" placeholder="Masukan Angka">
+        <input type="text" name="angka1" placeholder="Masukan Angka">
         <br>
         <label for="">Angka 2</label>
-        <input type="number" name="angka2" placeholder="Masukan Angka">
+        <input type="text" name="angka2" placeholder="Masukan Angka">
         <br>
         <button type="submit">Simpan</button>
     </form>
+    @if (isset($jumlah))
+        <h1>Hasilnya adalah {{ $jumlah }} </h1>
+    @endif
 
-    <h1>Hasilnya adalah {{ $jumlah }} </h1>
+    @if (isset($error))
+        <h2>{{ $error }}</h2>
+    @endif
+
 </body>
 
 </html>

@@ -1,9 +1,26 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// ini (/) di blade tuh namanya defult route
+
+Route::get('/', [App\Http\Controllers\LoginController::class, 'login']);
+Route::get('login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
+
+Route::post('actionLogin', [App\Http\Controllers\LoginController::class, 'actionLogin'])->name('actionLogin');
+Route::get('logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('dashboard', App\Http\Controllers\DashboardController::class);
+    Route::resource('level', App\Http\Controllers\LevelController::class);
+    Route::resource('service', App\Http\Controllers\ServiceController::class);
+    Route::resource('customer', App\Http\Controllers\CustomerController::class);
+    Route::get('insert/service', [DashboardController::class, 'showInService']);
 });
 
 // get: hanya bisa melihat dan membaca
