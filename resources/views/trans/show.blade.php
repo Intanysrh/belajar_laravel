@@ -53,7 +53,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Transaksi Order Detail</h3>
-                    <form action="post">
+                    <form action="" method="post" id="paymentForm" data-order-id="{{ $details->id }}">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -99,8 +99,9 @@
                             </tfoot>
                         </table>
                         <div class="mt-3">
-                            <button class="btn btn-primary" name="cash">Bayar Cash</button>
-                            <button class="btn btn-primary" name="cashless">Cashless</button>
+                            <button class="btn btn-primary" name="payment_method" value="cash">Bayar
+                                Cash</button>
+                            <button class="btn btn-success" name="payment_method" value="midtrans">Cashless</button>
                         </div>
                     </form>
 

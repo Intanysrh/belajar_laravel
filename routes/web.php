@@ -22,6 +22,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', App\Http\Controllers\UserController::class);
     Route::resource('trans', App\Http\Controllers\TransOrderController::class);
     Route::get('print_invoice/{id}', [App\Http\Controllers\TransOrderController::class, 'printInvoice'])->name('print_invoice');
+
+    Route::post('trans/(id)/snap', [App\Http\Controllers\TransOrderController::class, 'snap'])->name('trans.snap');
 });
 
 // get: hanya bisa melihat dan membaca

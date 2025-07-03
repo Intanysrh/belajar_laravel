@@ -77,29 +77,31 @@ class TransOrderController extends Controller
     /**
      * Display the specified resource.
      */
+
+
+
     public function show(string $id)
     {
         $title = "Detail Transaksi";
         $details = TransOrders::with(['customer', 'details.service'])->where('id', $id)->first();
 
-        $params = [
-            'transaction_details' => [
-                'order_id' => rand(),
-                'gross_amount' => 10.000,
-            ],
-            'customer_details' => [
-                'first_name' => "Bambang",
-                'last_name' => "Pamungkas",
-                'email' => "bambang@gmail.com",
-                'phone' => "089191919191",
-            ],
-            'enable_payment' => [
-                'qris'
-            ]
-        ];
+        // $params = [
+        //     'transaction_details' => [
+        //         'order_id' => rand(),
+        //         'gross_amount' => 10.000,
+        //     ],
+        //     'customer_details' => [
+        //         'first_name' => "Bambang",
+        //         'last_name' => "Pamungkas",
+        //         'email' => "bambang@gmail.com",
+        //         'phone' => "089191919191",
+        //     ],
+        //     'enable_payment' => [
+        //         'qris'
+        //     ]
+        // ];
         // $snapToken = Snap::getSnapToken($params);
-        $snapToken = Snap::createTransaction($params);
-        return view('trans.show', compact('title', 'details', 'snapToken'));
+        return view('trans.show', compact('title', 'details'));
     }
 
     /**
@@ -128,5 +130,28 @@ class TransOrderController extends Controller
         $details = TransOrders::with(['customer', 'details.service'])->where('id', $id)->first();
         // return $details;
         return view('trans.print', compact('details'));
+    }
+
+    public function snap(Request $request, $id)
+    {
+        $order = TransOrders::with('details', 'customer')->findOrFail($id);
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => rand(),
+                'gross_amount' => 10000,
+            ],
+            'customer_details' => [
+                'first_name' => "Bambang",
+                'last_name' => "Pamungkas",
+                'email' => "bambang@gmail.com",
+                'phone' => "089191919191",
+            ],
+            'enable_payment' => [
+                'qris'
+            ]
+        ];
+        $snap = Snap::createTransaction($params);
+        return response()->json(['token' => $snap->token]);
     }
 }
