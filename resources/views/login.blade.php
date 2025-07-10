@@ -43,6 +43,7 @@
 <body>
 
     <main>
+        @include('sweetalert::alert')
         <div class="container">
 
             <section

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+// use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class LoginController extends Controller
 {
@@ -27,6 +30,7 @@ class LoginController extends Controller
             return redirect()->intended('dashboard');
             // return redirect()->to('dashboard');
         }
+        Alert::error('Error Tittle', 'Invalid Credentials');
 
         return back()->withErrors([
             'email' => 'Invalid credentials',
